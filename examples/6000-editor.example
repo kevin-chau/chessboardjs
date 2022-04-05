@@ -1,0 +1,58 @@
+===== id
+6000
+
+===== Name
+Editor
+
+===== Description
+
+
+===== HTML
+<main>
+<section class="homepage-section-88e4a body-width-115f6">
+<div class="col-11bcf">
+    <div id="board" style="width: 500px"></div>
+    <button id="startBtn">Start Position</button>
+    <button id="clearBtn">Clear Board</button>
+    <button id="fenBtn">Print FEN to Console</button>
+</div>
+</section>
+</main>
+
+===== JS
+;(function () {
+  function isTouchDevice () {
+    return ('ontouchstart' in document.documentElement)
+  }
+
+  // Set up the main chess board
+  var board = Chessboard('board', {
+      draggable: true,
+      dropOffBoard: 'trash',
+      sparePieces: true
+  })
+
+  // Initialize with an FEN
+  // board.position('rnbqkbnr/pppppppp/8/2RR1P2/4B3/2K5/PP1PPPPP/RN1Q1BNR')
+
+  function clickShowPositionBtn () {
+      console.log('Current position as an Object:')
+      console.log(board.position())
+
+      console.log('Current position as a FEN string:')
+      console.log(board.fen())
+  }
+
+  $('#startBtn').on('click', board.start)
+  $('#clearBtn').on('click', board.clear)
+  $('#fenBtn').on('click', clickShowPositionBtn)
+
+  // prevent "browser drag" of the black king
+  $('.hero-inner-556fe img').on('mousedown', function (evt) { evt.preventDefault() })
+
+  // prevent hover problems on touch devices
+  if (isTouchDevice()) {
+    $('.navbar-a57cc').removeClass('hover-effect')
+  }
+
+})()
